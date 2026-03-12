@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: WorkiomProjectManagement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "12345678"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrator:
+    build:
+      context: .
+      dockerfile: src/WorkiomProjectManagement.DbMigrator/Dockerfile
+    environment:
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=WorkiomProjectManagement;User ID=postgres;Password=12345678;"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: .
+      dockerfile: src/WorkiomProjectManagement.HttpApi.Host/Dockerfile
+    ports:
+      - "44355:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Staging
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=WorkiomProjectManagement;User ID=postgres;Password=12345678;"
+      App__SelfUrl: "http://localhost:44355"
+      AuthServer__Authority: "http://api"
+      AuthServer__CertificatePassPhrase: "workiom-openiddict-2024"
+    restart: unless-stopped
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:
