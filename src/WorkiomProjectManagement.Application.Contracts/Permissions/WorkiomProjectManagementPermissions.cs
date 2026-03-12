@@ -11,6 +11,7 @@ public static class WorkiomProjectManagementPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
         public const string ManageMembers = Default + ".ManageMembers";
+        public const string ManageReports = Default + ".ManageReports";
     }
 
     public static class ProjectTasks

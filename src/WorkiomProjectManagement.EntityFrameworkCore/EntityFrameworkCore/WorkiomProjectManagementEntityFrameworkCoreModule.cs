@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -17,6 +18,7 @@ using Volo.Abp.Studio;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using WorkiomProjectManagement.EntityFrameworkCore.ProjectManagement;
 using WorkiomProjectManagement.ProjectManagement;
+using WorkiomProjectManagement.ReportEngine;
 
 namespace WorkiomProjectManagement.EntityFrameworkCore;
 
@@ -74,5 +76,17 @@ public class WorkiomProjectManagementEntityFrameworkCoreModule : AbpModule
         {
             options.ConfigureProjectManagement();
         });
+
+        // Auto-register all IReportGenerator implementations from this assembly
+        var generatorTypes = typeof(WorkiomProjectManagementEntityFrameworkCoreModule).Assembly
+            .GetTypes()
+            .Where(t => t.IsClass
+                      && !t.IsAbstract
+                      && typeof(IProjectReportGenerator).IsAssignableFrom(t));
+
+        foreach (var type in generatorTypes)
+        {
+            context.Services.AddTransient(typeof(IProjectReportGenerator), type);
+        }
     }
 }

@@ -4,6 +4,43 @@
     "AppName": "WorkiomProjectManagement",
     "Menu:Home": "Home",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
+    "Welcome": "Welcome",
+
+    "Permission:Projects": "Projects",
+    "Permission:Projects.Create": "Create Project",
+    "Permission:Projects.Edit": "Edit Project",
+    "Permission:Projects.Delete": "Delete Project",
+    "Permission:Projects.ManageMembers": "Manage Members",
+    "Permission:Projects.ManageReports": "Manage Reports",
+    "Permission:ProjectTasks": "Project Tasks",
+    "Permission:ProjectTasks.Create": "Create Task",
+    "Permission:ProjectTasks.Edit": "Edit Task",
+    "Permission:ProjectTasks.Delete": "Delete Task",
+
+    "Enum:TaskStatus:Todo": "To Do",
+    "Enum:TaskStatus:InProgress": "In Progress",
+    "Enum:TaskStatus:Done": "Done",
+    "Enum:TaskStatus:Cancelled": "Cancelled",
+
+    "Enum:TaskPriority:Unknown": "Unknown",
+    "Enum:TaskPriority:Low": "Low",
+    "Enum:TaskPriority:Medium": "Medium",
+    "Enum:TaskPriority:High": "High",
+    "Enum:TaskPriority:Critical": "Critical",
+
+    "Report:Series:TaskCount": "Task Count",
+
+    "ReportEngine:Error:ParameterRequired": "Parameter '{0}' is required for report type '{1}'.",
+    "ReportEngine:Error:ParameterInvalidType": "Parameter '{0}' must be of type '{1}'.",
+
+    "WorkiomProjectManagement:Project:00001": "A project with the same name already exists.",
+
+    "WorkiomProjectManagement:ProjectMember:00001": "This user is already a member of the project.",
+    "WorkiomProjectManagement:ProjectMember:00002": "This user is not a member of the project.",
+
+    "WorkiomProjectManagement:ProjectTask:00001": "The assigned user is not a member of the project.",
+
+    "WorkiomProjectManagement:ReportEngine:00001": "Unsupported report type '{0}'.",
+    "WorkiomProjectManagement:ReportEngine:00002": "Invalid report parameters for '{0}'."
   }
 }

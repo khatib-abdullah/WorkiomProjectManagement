@@ -15,6 +15,7 @@ public class WorkiomProjectManagementPermissionDefinitionProvider : PermissionDe
         projectsPermission.AddChild(WorkiomProjectManagementPermissions.Projects.Edit, L("Permission:Projects.Edit"));
         projectsPermission.AddChild(WorkiomProjectManagementPermissions.Projects.Delete, L("Permission:Projects.Delete"));
         projectsPermission.AddChild(WorkiomProjectManagementPermissions.Projects.ManageMembers, L("Permission:Projects.ManageMembers"));
+        projectsPermission.AddChild(WorkiomProjectManagementPermissions.Projects.ManageReports, L("Permission:Projects.ManageReports"));
 
         var projectTasksPermission = myGroup.AddPermission(WorkiomProjectManagementPermissions.ProjectTasks.Default, L("Permission:ProjectTasks"));
         projectTasksPermission.AddChild(WorkiomProjectManagementPermissions.ProjectTasks.Create, L("Permission:ProjectTasks.Create"));

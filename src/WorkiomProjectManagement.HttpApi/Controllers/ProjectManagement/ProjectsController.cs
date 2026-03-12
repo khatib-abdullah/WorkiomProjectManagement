@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Application.Dtos;
 using WorkiomProjectManagement.ProjectManagement;
 using WorkiomProjectManagement.ProjectManagement.Dtos;
+using WorkiomProjectManagement.ReportEngine;
+using WorkiomProjectManagement.ReportEngine.Dtos;
 
 namespace WorkiomProjectManagement.Controllers.ProjectManagement;
 
 [Area("app")]
 [Route("api/app/projects")]
-public class ProjectsController : WorkiomProjectManagementController, IProjectAppService
+public class ProjectsController : WorkiomProjectManagementController, IProjectAppService, IProjectReportAppService
 {
     protected IProjectAppService ProjectAppService => LazyServiceProvider.LazyGetRequiredService<IProjectAppService>();
+    protected IProjectReportAppService ProjectReportAppService => LazyServiceProvider.LazyGetRequiredService<IProjectReportAppService>();
 
     [HttpGet("{id}")]
     public virtual Task<ProjectDto> GetAsync(Guid id)
@@ -65,5 +69,17 @@ public class ProjectsController : WorkiomProjectManagementController, IProjectAp
     public virtual Task RemoveProjectMemberDtoAsync(Guid projectId, RemoveProjectMemberDto input)
     {
         return ProjectAppService.RemoveProjectMemberDtoAsync(projectId, input);
+    }
+
+    [HttpPost("{projectId}/reports/{projectReportSystemName}")]
+    public virtual Task<ProjectReportResultDto> GenerateProjectReportAsync(Guid projectId, string projectReportSystemName, ProjectReportRequestDto input)
+    {
+        return ProjectReportAppService.GenerateProjectReportAsync(projectId, projectReportSystemName, input);
+    }
+
+    [HttpGet("reports/types")]
+    public virtual Task<List<ProjectReportInfoDto>> GetAvailableProjectReportTypesAsync()
+    {
+        return ProjectReportAppService.GetAvailableProjectReportTypesAsync();
     }
 }

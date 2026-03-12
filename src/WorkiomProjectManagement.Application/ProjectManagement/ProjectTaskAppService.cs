@@ -25,7 +25,13 @@ public class ProjectTaskAppService : WorkiomProjectManagementAppService, IProjec
 
     public virtual async Task<PagedResultDto<ProjectTaskDto>> GetListAsync(GetProjectTasksInput input)
     {
-        var totalCount = await ProjectTaskRepository.GetCountAsync();
+        var totalCount = await ProjectTaskRepository.CountByProjectAsync(
+            input.ProjectId,
+            input.TaskStatus,
+            input.TaskPriority,
+            input.AssignedUserId
+        );
+
         var projectTasks = await ProjectTaskRepository.GetListByProjectAsync(
             input.ProjectId,
             input.SkipCount,
