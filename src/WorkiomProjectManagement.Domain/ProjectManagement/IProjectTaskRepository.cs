@@ -44,6 +44,10 @@ public interface IProjectTaskRepository : IRepository<ProjectTask, Guid>
         TaskPriority? taskPriority = null,
         CancellationToken cancellationToken = default);
 
+    Task<Dictionary<Guid, long>> GetCountsPerProjectAsync(
+        IEnumerable<Guid> projectIds,
+        CancellationToken cancellationToken = default);
+
     Task DeleteProjectTasksAsync(
         Guid projectId,
         CancellationToken cancellationToken = default);

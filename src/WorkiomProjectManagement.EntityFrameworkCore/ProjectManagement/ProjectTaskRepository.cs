@@ -125,6 +125,19 @@ public class ProjectTaskRepository : EfCoreRepository<WorkiomProjectManagementDb
         return totalCount;
     }
 
+    public virtual async Task<Dictionary<Guid, long>> GetCountsPerProjectAsync(
+        IEnumerable<Guid> projectIds,
+        CancellationToken cancellationToken = default)
+    {
+        var query = await GetQueryableAsync();
+
+        return await query
+            .Where(t => projectIds.Contains(t.ProjectId))
+            .GroupBy(t => t.ProjectId)
+            .Select(g => new { ProjectId = g.Key, Count = (long)g.Count() })
+            .ToDictionaryAsync(x => x.ProjectId, x => x.Count, GetCancellationToken(cancellationToken));
+    }
+
     public virtual async Task DeleteProjectTasksAsync(
         Guid projectId,
         CancellationToken cancellationToken = default)

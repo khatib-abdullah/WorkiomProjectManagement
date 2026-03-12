@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,7 @@ public class ProjectAppService : WorkiomProjectManagementAppService, IProjectApp
     protected virtual ProjectManager ProjectManager => LazyServiceProvider.LazyGetRequiredService<ProjectManager>();
     protected virtual IProjectRepository ProjectRepository => LazyServiceProvider.LazyGetRequiredService<IProjectRepository>();
     protected virtual IProjectMemberRepository ProjectMemberRepository => LazyServiceProvider.LazyGetRequiredService<IProjectMemberRepository>();
+    protected virtual IProjectTaskRepository ProjectTaskRepository => LazyServiceProvider.LazyGetRequiredService<IProjectTaskRepository>();
 
     public virtual async Task<ProjectDto> GetAsync(Guid id)
     {
@@ -34,9 +36,19 @@ public class ProjectAppService : WorkiomProjectManagementAppService, IProjectApp
             includeDetails: true
         );
 
+        var projectIds = projects.Select(p => p.Id).ToList();
+        var taskCounts = await ProjectTaskRepository.GetCountsPerProjectAsync(projectIds);
+
+        var items = projects.Select(p =>
+        {
+            var dto = ObjectMapper.Map<Project, ProjectDto>(p);
+            dto.TasksCount = taskCounts.GetValueOrDefault(p.Id, 0L);
+            return dto;
+        });
+
         return new PagedResultDto<ProjectDto>(
             totalCount,
-            [.. projects.Select(ObjectMapper.Map<Project, ProjectDto>)]
+            [.. items]
         );
     }
 
