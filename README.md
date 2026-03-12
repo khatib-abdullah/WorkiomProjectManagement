@@ -1,77 +1,43 @@
 # WorkiomProjectManagement
 
-## About this solution
+A Task & Project Management REST API built with .NET 10 and the ABP Framework.
 
-This is a layered startup solution based on [Domain Driven Design (DDD)](https://abp.io/docs/latest/framework/architecture/domain-driven-design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/solution-templates/layered-web-application) documentation for more info.
+## Running the application
 
-### Pre-requirements
+Requires [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet) and a running PostgreSQL instance.
 
-* [.NET10.0+ SDK](https://dotnet.microsoft.com/download/dotnet)
-* [Node v18 or 20](https://nodejs.org/en)
-
-### Configurations
-
-The solution comes with a default configuration that works out of the box. However, you may consider to change the following configuration before running your solution:
-
-* Check the `ConnectionStrings` in `appsettings.json` files under the `WorkiomProjectManagement.HttpApi.Host` and `WorkiomProjectManagement.DbMigrator` projects and change it if you need.
-
-### Before running the application
-
-* Run `abp install-libs` command on your solution folder to install client-side package dependencies. This step is automatically done when you create a new solution, if you didn't especially disabled it. However, you should run it yourself if you have first cloned this solution from your source control, or added a new client-side package dependency to your solution.
-* Run `WorkiomProjectManagement.DbMigrator` to create the initial database. This step is also automatically done when you create a new solution, if you didn't especially disabled it. This should be done in the first run. It is also needed if a new database migration is added to the solution later.
-
-#### Generating a Signing Certificate
-
-In the production environment, you need to use a production signing certificate. ABP Framework sets up signing and encryption certificates in your application and expects an `openiddict.pfx` file in your application.
-
-To generate a signing certificate, you can use the following command:
+The default connection string points to `localhost:5432` with database `WorkiomProjectManagement`, user `postgres`, password `12345678`. Update `appsettings.json` under `WorkiomProjectManagement.HttpApi.Host` and `WorkiomProjectManagement.DbMigrator` if needed.
 
 ```bash
-dotnet dev-certs https -v -ep openiddict.pfx -p c2623100-c585-4c0d-8974-702f734dc17e
+# Run migrations
+dotnet run --project src/WorkiomProjectManagement.DbMigrator
+
+# Start the API
+dotnet run --project src/WorkiomProjectManagement.HttpApi.Host
 ```
 
-> `c2623100-c585-4c0d-8974-702f734dc17e` is the password of the certificate, you can change it to any password you want.
+The API will be available at `https://localhost:44355`. Swagger UI is at `https://localhost:44355/swagger`.
 
-It is recommended to use **two** RSA certificates, distinct from the certificate(s) used for HTTPS: one for encryption, one for signing.
+---
 
-For more information, please refer to: [OpenIddict Certificate Configuration](https://documentation.openiddict.com/configuration/encryption-and-signing-credentials.html#registering-a-certificate-recommended-for-production-ready-scenarios)
+## Design decisions
 
-> Also, see the [Configuring OpenIddict](https://abp.io/docs/latest/Deployment/Configuring-OpenIddict#production-environment) documentation for more information.
+### DDD layered architecture over ABP
 
-### Solution structure
+The solution uses ABP's layered DDD template. Domain logic lives exclusively in `Domain` — entities, managers, and repository interfaces. `EntityFrameworkCore` holds the only EF Core dependency. Application services coordinate between the two without leaking persistence concerns upward.
 
-This is a layered monolith application that consists of the following applications:
+### Report engine extensibility
 
-* `angular`: Angular application.
-* `WorkiomProjectManagement.DbMigrator`: A console application which applies the migrations and also seeds the initial data. It is useful on development as well as on production environment.
-* `WorkiomProjectManagement.HttpApi.Host`: ASP.NET Core API application that is used to expose the APIs to the clients.
+The report engine uses a plugin pattern: each report type is an independent class that extends `ProjectReportGeneratorBase` and is auto-discovered via ABP's DI. Adding a new report type requires creating one class — no registration, no factory changes, no engine modifications. See `ARCHITECTURE.md` for details.
 
-#### Test Projects
+### Task count moved to the task repository
 
-The `test` folder contains the following test projects:
+`GetCountsPerProjectAsync` lives on `IProjectTaskRepository`, not `IProjectRepository`. Task counts are the task repository's responsibility. `ProjectAppService` calls both repositories and merges the results, keeping each repository focused on its own aggregate.
 
-* `WorkiomProjectManagement.Application.Tests`: Application layer tests.
-* `WorkiomProjectManagement.Domain.Tests`: Domain layer tests.
-* `WorkiomProjectManagement.EntityFrameworkCore.Tests`: Entity Framework Core integration tests.
+### History tracking on tasks
 
+`ProjectTask` maintains `StatusHistory` and `AssignmentHistory` as owned collections. Every status change and reassignment is recorded automatically by the domain manager, providing a full audit trail without additional infrastructure.
 
+### Multi-tenancy
 
-
-## Deploying the application
-
-Deploying an ABP application follows the same process as deploying any .NET or ASP.NET Core application. However, there are important considerations to keep in mind. For detailed guidance, refer to ABP's [deployment documentation](https://abp.io/docs/latest/Deployment/Index).
-
-### Additional resources
-
-
-#### Internal Resources
-
-You can find detailed setup and configuration guide(s) for your solution below:
-
-* [Angular](./angular/README.md)
-
-#### External Resources
-You can see the following resources to learn more about your solution and the ABP Framework:
-
-* [Web Application Development Tutorial](https://abp.io/docs/latest/tutorials/book-store/part-1)
-* [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index)
+All entities implement `IMultiTenant`. The ABP data filter ensures tenants are always isolated at the query level without any manual `WHERE TenantId = ?` clauses in application code.
