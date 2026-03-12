@@ -29,6 +29,8 @@
     "Enum:TaskPriority:Critical": "Critical",
 
     "Report:Series:TaskCount": "Task Count",
+    "Report:Series:OverdueTasks": "Overdue Tasks",
+    "Report:Label:Unassigned": "Unassigned",
 
     "ReportEngine:Error:ParameterRequired": "Parameter '{0}' is required for report type '{1}'.",
     "ReportEngine:Error:ParameterInvalidType": "Parameter '{0}' must be of type '{1}'.",

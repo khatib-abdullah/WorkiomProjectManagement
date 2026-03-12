@@ -68,10 +68,11 @@ The report engine is designed to be **open for extension, closed for modificatio
 - Adding a new report type requires creating **one new class** that extends `ProjectReportGeneratorBase`. Nothing else changes.
 
 Built-in report types:
-| System Name | Description |
-|---|---|
-| `project_tasks_by_status` | Task count grouped by status |
-| `project_tasks_by_priority` | Task count grouped by priority |
+| System Name | Description | Author |
+|---|---|---|
+| `project_tasks_by_status` | Task count grouped by status | Hand-written |
+| `project_tasks_by_priority` | Task count grouped by priority | Hand-written |
+| `project_tasks_overdue_by_assignee` | Overdue task count grouped by assignee | AI-generated (see AI Extension) |
 
 ---
 
@@ -106,8 +107,8 @@ Built-in report types:
 
 ### What the AI got right
 
-The AI correctly read and replicated the full structure of the existing generators: constructor injection of `IProjectTaskRepository` and `IStringLocalizer`, the `SupportedParameters` readonly list pattern, use of `GetProperty<T>()` to read typed parameters, `WhereIf` for optional filters, and the `ProjectReportResult` shape with `Labels` and `Series`.
+The AI correctly read and replicated the full structure of the existing generators: constructor injection of `IProjectTaskRepository` and `IStringLocalizer`, the `SupportedParameters` readonly list pattern, use of `GetProperty<T>()` to read typed parameters, `WhereIf` for optional filters, and the `ProjectReportResult` shape with `Labels` and `Series`. It correctly used `DateOnly.FromDateTime(DateTime.UtcNow)` as a local variable before the query (not inline), which EF Core can translate.
 
 ### What needed fixing
 
-The AI used `DateTime.UtcNow` directly in the LINQ query, which EF Core cannot translate to SQL. This was replaced with a local variable assigned before the query (`var now = DateTime.UtcNow;`) and referenced inside the expression tree.
+The AI did not add the localization keys it introduced (`Report:Series:OverdueTasks`, `Report:Label:Unassigned`) to `en.json`, despite the prompt explicitly asking it to. These were added manually.
