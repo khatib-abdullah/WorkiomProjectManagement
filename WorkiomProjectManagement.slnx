@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/WorkiomProjectManagement.Domain/WorkiomProjectManagement.Domain.csproj" />
+        <Project Path="src/WorkiomProjectManagement.Application/WorkiomProjectManagement.Application.csproj" />
+        <Project Path="src/WorkiomProjectManagement.EntityFrameworkCore/WorkiomProjectManagement.EntityFrameworkCore.csproj" />
+        <Project Path="src/WorkiomProjectManagement.Domain.Shared/WorkiomProjectManagement.Domain.Shared.csproj" />
+        <Project Path="src/WorkiomProjectManagement.Application.Contracts/WorkiomProjectManagement.Application.Contracts.csproj" />
+        <Project Path="src/WorkiomProjectManagement.HttpApi/WorkiomProjectManagement.HttpApi.csproj" />
+        <Project Path="src/WorkiomProjectManagement.HttpApi.Client/WorkiomProjectManagement.HttpApi.Client.csproj" />
+        <Project Path="src/WorkiomProjectManagement.DbMigrator/WorkiomProjectManagement.DbMigrator.csproj" />
+        <Project Path="src/WorkiomProjectManagement.HttpApi.Host/WorkiomProjectManagement.HttpApi.Host.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/WorkiomProjectManagement.Application.Tests/WorkiomProjectManagement.Application.Tests.csproj" />
+        <Project Path="test/WorkiomProjectManagement.EntityFrameworkCore.Tests/WorkiomProjectManagement.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/WorkiomProjectManagement.TestBase/WorkiomProjectManagement.TestBase.csproj" />
+        <Project Path="test/WorkiomProjectManagement.Domain.Tests/WorkiomProjectManagement.Domain.Tests.csproj" />
+        <Project Path="test/WorkiomProjectManagement.HttpApi.Client.ConsoleTestApp/WorkiomProjectManagement.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>

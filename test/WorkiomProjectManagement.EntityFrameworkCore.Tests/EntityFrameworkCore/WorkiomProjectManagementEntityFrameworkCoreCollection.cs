@@ -1,0 +1,9 @@
+﻿using Xunit;
+
+namespace WorkiomProjectManagement.EntityFrameworkCore;
+
+[CollectionDefinition(WorkiomProjectManagementTestConsts.CollectionDefinitionName)]
+public class WorkiomProjectManagementEntityFrameworkCoreCollection : ICollectionFixture<WorkiomProjectManagementEntityFrameworkCoreFixture>
+{
+
+}

@@ -1,0 +1,8 @@
+﻿using Volo.Abp;
+
+namespace WorkiomProjectManagement.EntityFrameworkCore;
+
+public abstract class WorkiomProjectManagementEntityFrameworkCoreTestBase : WorkiomProjectManagementTestBase<WorkiomProjectManagementEntityFrameworkCoreTestModule>
+{
+
+}

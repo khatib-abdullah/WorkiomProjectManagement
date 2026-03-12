@@ -1,0 +1,9 @@
+﻿using WorkiomProjectManagement.EntityFrameworkCore;
+using Xunit;
+
+namespace WorkiomProjectManagement.EntityFrameworkCore;
+
+public class WorkiomProjectManagementEntityFrameworkCoreCollectionFixtureBase : ICollectionFixture<WorkiomProjectManagementEntityFrameworkCoreFixture>
+{
+
+}

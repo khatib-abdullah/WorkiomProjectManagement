@@ -1,0 +1,109 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.1.0",
+      "isInstalled": true,
+      "creationTime": "03/11/2026 12:14:40 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "WorkiomProjectManagement.Application": {
+      "path": "src/WorkiomProjectManagement.Application/WorkiomProjectManagement.Application.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.Application.Tests": {
+      "path": "test/WorkiomProjectManagement.Application.Tests/WorkiomProjectManagement.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "WorkiomProjectManagement.Domain.Shared": {
+      "path": "src/WorkiomProjectManagement.Domain.Shared/WorkiomProjectManagement.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.Application.Contracts": {
+      "path": "src/WorkiomProjectManagement.Application.Contracts/WorkiomProjectManagement.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.HttpApi": {
+      "path": "src/WorkiomProjectManagement.HttpApi/WorkiomProjectManagement.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.HttpApi.Client": {
+      "path": "src/WorkiomProjectManagement.HttpApi.Client/WorkiomProjectManagement.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.EntityFrameworkCore.Tests": {
+      "path": "test/WorkiomProjectManagement.EntityFrameworkCore.Tests/WorkiomProjectManagement.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "WorkiomProjectManagement.EntityFrameworkCore": {
+      "path": "src/WorkiomProjectManagement.EntityFrameworkCore/WorkiomProjectManagement.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.TestBase": {
+      "path": "test/WorkiomProjectManagement.TestBase/WorkiomProjectManagement.TestBase.abppkg",
+      "folder": "test"
+    },
+    "WorkiomProjectManagement.Domain.Tests": {
+      "path": "test/WorkiomProjectManagement.Domain.Tests/WorkiomProjectManagement.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "WorkiomProjectManagement.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/WorkiomProjectManagement.HttpApi.Client.ConsoleTestApp/WorkiomProjectManagement.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "WorkiomProjectManagement.DbMigrator": {
+      "path": "src/WorkiomProjectManagement.DbMigrator/WorkiomProjectManagement.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.HttpApi.Host": {
+      "path": "src/WorkiomProjectManagement.HttpApi.Host/WorkiomProjectManagement.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "WorkiomProjectManagement.Domain": {
+      "path": "src/WorkiomProjectManagement.Domain/WorkiomProjectManagement.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
